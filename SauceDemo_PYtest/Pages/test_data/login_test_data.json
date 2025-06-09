@@ -1,0 +1,27 @@
+[
+  {
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "expected_result": "success"
+  },
+  {
+    "username": "user_isha",
+    "password": "password23",
+    "expected_result": "invalid_credentials"
+  },
+  {
+    "username": "",
+    "password": "",
+    "expected_result": "empty_fields"
+  },
+  {
+    "username": "standard_user",
+    "password": "",
+    "expected_result": "missing_password"
+  },
+  {
+    "username": "",
+    "password": "secret_sauce",
+    "expected_result": "missing_username"
+  }
+]
