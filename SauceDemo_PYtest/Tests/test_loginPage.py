@@ -1,20 +1,25 @@
 
-#test_loginPage.py
+# test_login_page.py
+
 import os
 import json
 import pytest
 from SauceDemo_PYtest.Pages.login_page import LoginPage
 
-# Load JSON once at module level
+# Load test data
 current_dir = os.path.dirname(__file__)
 json_path = os.path.join(current_dir, '..', 'Pages', 'test_data', 'login_test_data.json')
 
-with open(os.path.abspath(json_path), 'r') as f:
-    test_data = json.load(f)
+try:
+    with open(os.path.abspath(json_path), 'r') as f:
+        test_data = json.load(f)
+except Exception as e:
+    print(f"Failed to load test data: {e}")
+    test_data = []
 
-@pytest.mark.login  # <-- add this marker
+@pytest.mark.login
 @pytest.mark.parametrize("case", test_data)
-def test_login_cases(init_driver, case):
+def test_login_cases(init_driver, case):  # fixture is injected here
     login_page = LoginPage(init_driver)
 
     username = case['username']
@@ -26,7 +31,7 @@ def test_login_cases(init_driver, case):
     login_page.click_login()
 
     if expected_result == "success":
-        assert login_page.is_dashboard_displayed(), "Dashboard should be displayed for valid login."
+        assert login_page.is_dashboard_displayed(), "Expected dashboard not visible"
     else:
         error = login_page.get_error_message()
         if expected_result == "invalid_credentials":

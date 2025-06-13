@@ -1,8 +1,25 @@
 
 #test_ProductPage.py
+import json
+import os
+
+# Correct path to: SauceDemo_PYtest/Pages/test_data/test_data.json
+data_path = os.path.join(
+    os.path.dirname(__file__),
+    '..',  # up from Tests to SauceDemo_PYtest
+    'Pages',
+    'test_data',
+    'ProductPage_data.json'
+)
+data_path = os.path.abspath(data_path)
+
+with open(data_path, 'r') as f:
+    TEST_DATA = json.load(f)
+
+
+
 from SauceDemo_PYtest.Pages.login_page import LoginPage
 from SauceDemo_PYtest.Pages.Product_page import ProductPage
-
 import pytest
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -22,13 +39,14 @@ class TestProductPage:
         ActionChains(init_driver).send_keys(Keys.ESCAPE).perform()
 
         product_page = ProductPage(init_driver)
+        # Use JSON data
         assert product_page.is_on_correct_page(), "URL mismatch after login"
         assert product_page.is_title_correct(), "Product title is incorrect"
 
         item_count = product_page.count_inventory_items()
-        print(f"Number of inventory items: {item_count}")
-        assert item_count == 6, "Expected 6 inventory items on the page"
-        time.sleep(5)
+        expected_count = TEST_DATA["product_page"]["expected_item_count"]
+        assert item_count == expected_count, f"Expected {expected_count} inventory items on the page"
+
 
     # to test after clicking "Add to cart" change into "Remove"
     def test_add_to_cart_functionality(self,init_driver):
@@ -50,7 +68,7 @@ class TestProductPage:
         cart_count = product_page.get_cart_count()
         assert cart_count == 1, f"Expected cart count to be 1, but got {cart_count}"
 
-        time.sleep(5)
+
 
     # To test adding all items to cart: observe button and cart count
     @pytest.mark.cart
@@ -116,7 +134,7 @@ class TestProductPage:
         prices = product_page.get_product_prices()
         assert prices == sorted(prices), "Products are not sorted by price low to high"
 
-
+    @pytest.mark.filter
     def test_sort_by_price_high_to_low(self,init_driver):
         login_page = LoginPage(init_driver)
         login_page.login()

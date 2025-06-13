@@ -1,0 +1,7 @@
+{
+  "product_page": {
+    "expected_url": "https://www.saucedemo.com/inventory.html",
+    "expected_title": "Products",
+    "expected_item_count": 6
+  }
+}
