@@ -55,4 +55,7 @@ class LoginPage(BasePage):
         self.click(self.LOGIN_BUTTON)
 
     def wait_for_login_page(self):
-        self.wait.until(EC.visibility_of_element_located(self.USERNAME))
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.USERNAME))
+        except TimeoutException:
+            raise AssertionError("Login page did not load in time — username field not found.")

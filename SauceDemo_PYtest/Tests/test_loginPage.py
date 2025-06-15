@@ -20,6 +20,7 @@ except Exception as e:
 @pytest.mark.login
 @pytest.mark.parametrize("case", test_data)
 def test_login_cases(init_driver, case):  # fixture is injected here
+    init_driver.get("https://www.saucedemo.com/")
     login_page = LoginPage(init_driver)
 
     username = case.get("username", "")
