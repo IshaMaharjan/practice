@@ -18,3 +18,17 @@ def init_driver():
     driver.quit()
 
 #test module is a Python file that contains test functions or test classes. For example, a file named test_math.py
+
+
+
+@pytest.fixture
+def login_page(init_driver):
+    return LoginPage(init_driver)
+
+@pytest.fixture
+def product_page(init_driver):
+    return ProductPage(init_driver)
+
+@pytest.fixture
+def cart_page(init_driver):
+    return CartPage(init_driver)

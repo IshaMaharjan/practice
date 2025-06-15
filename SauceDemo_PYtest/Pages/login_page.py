@@ -53,3 +53,6 @@ class LoginPage(BasePage):
         self.slow_type(self.USERNAME, username)
         self.type(self.PASSWORD, password)
         self.click(self.LOGIN_BUTTON)
+
+    def wait_for_login_page(self):
+        self.wait.until(EC.visibility_of_element_located(self.USERNAME))
