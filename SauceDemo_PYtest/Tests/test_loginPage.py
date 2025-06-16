@@ -20,15 +20,18 @@ except Exception as e:
 @pytest.mark.login
 @pytest.mark.parametrize("case", test_data)
 def test_login_cases(init_driver, case):  # fixture is injected here
+    init_driver.get("https://www.saucedemo.com/")
     login_page = LoginPage(init_driver)
 
-    username = case['username']
-    password = case['password']
+    username = case.get("username", "")
+    password = case.get("password", "")
     expected_result = case['expected_result']
 
+    login_page.wait_for_login_page()
     login_page.enter_username(username)
     login_page.enter_password(password)
     login_page.click_login()
+
 
     if expected_result == "success":
         assert login_page.is_dashboard_displayed(), "Expected dashboard not visible"
