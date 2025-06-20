@@ -8,7 +8,7 @@ class TestCartFunctionality:
 
         product_page.add_to_cart("Sauce Labs Backpack")
         product_page.open_cart()
-        assert cart_page.has_item("Sauce Labs Backpack")
+        assert cart_page.has_item("Sauce Labs Backpack"), "Item not found in cart before reload"
 
         init_driver.refresh()
-        assert cart_page.has_item("Sauce Labs Backpack")
+        assert cart_page.has_item("Sauce Labs Backpack"), "Item not found in cart after reload"

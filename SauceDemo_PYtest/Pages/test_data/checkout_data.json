@@ -1,0 +1,20 @@
+[
+  {
+    "first_name": "sital",
+    "last_name": "secret_sauce",
+    "zip_code": "44335",
+    "expected_result": "success"
+  },
+  {
+    "first_name": "sital",
+    "last_name": "secret_sauce",
+    "zip_code": "",
+    "expected_result": "success"
+  },
+  {
+    "first_name": "sital",
+    "last_name": "",
+    "zip_code": "55674",
+    "expected_result": "success"
+  }
+]
