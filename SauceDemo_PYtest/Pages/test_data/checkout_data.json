@@ -9,12 +9,18 @@
     "first_name": "sital",
     "last_name": "secret_sauce",
     "zip_code": "",
-    "expected_result": "success"
+    "expected_result": "empty_zip"
+  },
+  {
+    "first_name": "",
+    "last_name": "secret_sauce",
+    "zip_code": "55674",
+    "expected_result": "missing_first_name"
   },
   {
     "first_name": "sital",
     "last_name": "",
     "zip_code": "55674",
-    "expected_result": "success"
+    "expected_result": "missing_last_name"
   }
 ]

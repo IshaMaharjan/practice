@@ -19,19 +19,20 @@ class CheckoutPage1(BasePage):
     Cancel = (By.ID, "cancel")
     Checkout_title = (By.CSS_SELECTOR, "[data-test='title']")
     Checkout_URL = "https://www.saucedemo.com/checkout-step-one.html"
+    Error_Message = (By.CSS_SELECTOR, "h3[data-test='error']")
+
 
 
     def __init__(self, driver):
         super().__init__(driver)
 
     def enterFirstName(self, firstName):
-        self.send_keys(self.FirstName, firstName)
+        self.send_keys(self.FirstName, first_name)
 
     def enterLastName(self, lastName):
-        self.LastName = lastName
-
+        self.send_keys(self.LastName, last_name)
     def enterZipCode(self, zipCode):
-        self.ZipCode = zipCode
+        self.send_keys(self.ZipCode, zip_code)
 
     def clickCancel(self):
         self.click(self.Cancel)
@@ -53,3 +54,20 @@ class CheckoutPage1(BasePage):
         assert self.driver.current_url == self.Checkout_URL
         assert self.driver.title == self.Checkout_title
 
+    def wait_for_checkout_page(self):
+        try:
+            self.wait.until(EC.visibility_of_element_located(self.FirstName))
+        except TimeoutException:
+            raise AssertionError("checkout page did not load in time — firstname field not found.")
+
+    def is_bil_displayed(self):
+        try:
+            Title = self.wait.until(
+                EC.visibility_of_element_located((By.CLASS_NAME, "title")) #swag Lab
+            )
+            return Title.is_displayed()
+        except TimeoutException:
+            return False
+
+    def get_error_message(self):
+        return self.wait.until(EC.visibility_of_element_located(self.Error_Message)).text
